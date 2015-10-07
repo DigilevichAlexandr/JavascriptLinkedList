@@ -1,0 +1,112 @@
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>List</title>
+</head>
+<body>
+    <div> 
+    </div>
+
+    <script>
+        var Node = function () {
+            this.nodeval = arguments[0];
+            this.prev = null;
+            this.next = null;
+        }
+
+        var List = function () {
+            this.head = null
+            this.tail = null;
+            this.length = 0;
+            this.append = function (val) {
+                var temp = new Node(val);
+                if (this.tail == null) {                    
+                    this.head = temp;
+                    this.tail = temp;
+                    this.length=1;
+                }
+                else {
+                    temp.prev=this.tail;
+                    this.tail=temp;
+                    this.length++;
+                    if (this.length == 1) {
+                        this.head.next = this.tail;
+                        this.tail.prev = this.head;
+                    }
+                }
+                return this;
+            }
+            this.recursiveSearch = function (node, count, n) {
+                if (count < n){
+                    count++;
+                    return this.recursiveSearch(node.next,count,n)
+                }                    
+                else
+                    return node;
+            }
+            this.deleteAt = function (i) {
+                if (i > this.length) {
+                    console.log("out of range exseption");
+                    return this;
+                }
+                var node = this.recursiveSearch(this.head, 0, i);
+                var temp = new Node();
+                temp.prev = node.prev;
+                temp.next = node;
+            }
+            this.at = function (i) {
+                if (i > length) {
+                    console.log("out of range exseption");
+                    return this;
+                }
+                return this.recursiveSearch(this.head, 0, i);
+            }
+            this.reverse = function () {
+                var cur = this.head;
+                while (cur != null) {
+                    temp = cur.prev;
+                    cur.prev = cur.next;
+                    cur.next = prev;
+                    cur = cur.prev;
+                }
+                return this;
+            }
+            this.each=function(f){
+                var cur = this.head;
+                while (cur != null) {
+                    cur.nodeval = f(cur.nodeval);
+                    cur = cur.val;
+                }
+            }
+            this.indexOF = function (item) {
+                count = -1;
+                var getI = function (node) {
+                    if (node != null && node.val != item) {
+                        count++;
+                        getI(node.next);
+                    }
+                    else
+                        if (node==null)
+                            return -1;
+                }
+                var res = getI(this.head);
+                if (res = -1)
+                    document.log("error");
+                return res;
+            }
+        }
+
+        //--------------------test--------------------------
+
+        var list = new List();
+        list.append(1).append(2).append(3).deleteAt(2),reverse().at(0);
+    </script>
+</body>
+</html>
